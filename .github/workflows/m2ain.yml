@@ -24,8 +24,6 @@ jobs:
           # Enable built-in RDP firewall rules
           Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
 
-          Restart-Service -Name TermService -Force
-
       - name: Create RDP User with Simple Password
         run: |
           $password = "Rdp!$(Get-Random -Maximum 99999)"
