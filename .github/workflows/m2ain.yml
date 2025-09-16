@@ -26,7 +26,12 @@ jobs:
 
       - name: Create RDP User with Strong Password
         run: |
-          $password = "Rdp!" + (Get-Random -Maximum 99999).ToString("00000") + "Ab"
+          $upper   = -join ((65..90) | Get-Random -Count 3 | ForEach-Object {[char]$_})
+          $lower   = -join ((97..122) | Get-Random -Count 3 | ForEach-Object {[char]$_})
+          $digit   = -join ((0..9) | Get-Random -Count 3)
+          $special = -join ((33..47 + 58..64 + 91..96 + 123..126) | Get-Random -Count 3 | ForEach-Object {[char]$_})
+          $password = "Rdp!" + $upper + $lower + $digit + $special
+
           $securePass = ConvertTo-SecureString $password -AsPlainText -Force
 
           if (-not (Get-LocalUser -Name "RDP" -ErrorAction SilentlyContinue)) {
